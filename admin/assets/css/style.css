@@ -1,0 +1,23 @@
+body {
+    background: #000 !important;
+    color: #fff !important;
+}
+
+.login {
+    margin: 50px auto;
+    width: 600px;
+    padding: 25px;
+}
+
+.login button {
+    width: 100%;
+    text-align: center;
+}
+
+.login a, .login a:hover {
+    color: #666;
+}
+
+.admin {
+    margin: 50px 0;
+}
