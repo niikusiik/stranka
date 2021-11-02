@@ -22,12 +22,17 @@
             $novyPrispevok[] = kontrola($_POST['meno']);
             $novyPrispevok[] = kontrola($_POST['sprava']);
             $novyPrispevok[] = date('Y-m-d H:i:s', time());
+            
+            $chyba[0] = 'Prispevok bol úspešne pridaný.';
+            $chyba[1] = 'success';
 
             fputcsv($suborPrispevky, $novyPrispevok, ';');
             fclose($suborPrispevky);
+
         }
         else {
-            $chyba = 'Nesprávna odpoveď';
+            $chyba[0] = 'Nesprávna odpoveď.';
+            $chyba[1] = 'warning';
             $meno = kontrola($_POST['meno']);
             $sprava = kontrola($_POST['sprava']);
         }
@@ -54,8 +59,8 @@
     $prispevky = array_reverse($prispevky);
 
     if(!empty($chyba)) { ?>
-        <div class="alert alert-warning aler-dismissible fade show" role="alert">
-            <strong><?php echo $chyba; ?></strong>
+        <div class="alert alert-<?php echo $chyba[1]; ?> aler-dismissible fade show" role="alert">
+            <strong><?php echo $chyba[0]; ?></strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -69,14 +74,14 @@
         <input type="hidden" name="spravnaOdpoved" value="<?php echo $antiSpamKluc; ?>">
         <div class="form-group">
             <label for="i1"><b>Meno</b></label>
-            <input type="text" pattern="\S(.*\S)?" id="i1" name="meno" class="form-control" placeholder="Zadaj meno..." required>
+            <input type="text" value="<?php echo (isset($_POST['meno']) ? $_POST['meno'] : ""); ?>" pattern="\S(.*\S)?" id="i1" name="meno" class="form-control" placeholder="Zadaj meno..." required>
             <div class="invalid-feedback">
                 Prosíme vyplniť túto položku.
             </div>
         </div>
         <div class="form-group">
             <label for="i2"><b>Správa</b></label>
-            <textarea id="i2" name="sprava" pattern="\S(.*\S)?" class="form-control" placeholder="Zadaj text správy..." rows="3" required></textarea>
+            <textarea id="i2" name="sprava" pattern="\S(.*\S)?" class="form-control" placeholder="Zadaj text správy..." rows="3" required><?php echo (isset($_POST['sprava']) ? $_POST['sprava'] : ""); ?></textarea>
             <div class="invalid-feedback">
                 Prosíme vyplniť text správy.
             </div>
